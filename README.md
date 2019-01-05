@@ -15,7 +15,11 @@ then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
 ## /etc/ssh/sshd_config
 
-Do the secure thing in here ....
+Lockdown `/etc/ssh/sshd_config` - set port, turn off ChallengeResponseAuthentication, ensure PubkeyAuthentication is on
+
+cp public keys to $HOME/.ssh/authorized_keys
+
+then `service sshd restart` from the console.
 
 ## /root/.cshrc and $USER/.cshrc
 
