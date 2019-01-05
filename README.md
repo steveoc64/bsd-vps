@@ -5,9 +5,9 @@ Settings for BSD based VPS
 
 > Add self to wheel and operator groups
 
-## /root/.cshrc
+## /root/.cshrc and $USER/.cshrc
 
-Using .cshrc, just copy it to the root dir
+Using .cshrc, just copy it to the home dir, and comment out the prompt that applies
 
 ## /etc/rc.conf
 
