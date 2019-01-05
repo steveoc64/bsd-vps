@@ -34,9 +34,21 @@ Using file `rc.conf`
 
 ## /etc/pf.conf
 
-Using pf.conf
+Using file pf.conf
 
 Set all the specific jails
 
-`service pf start` to enable proper NAT'ing from inside the jails
+`service pf start` from the console to enable proper NAT'ing from inside the jails, and ssh back in to the box.
+
+## Test jail networking
+
+Create a dummy jail first
+
+`iocell create -n=myjail ip4_addr='vtnet1|10.240.X.X/16'`
+`iocell start myjail`
+`iocell console myjail` 
+
+check that the prompt looks good, the aliases all work, ifconfig shows only what it should, netstat -nr doesnt show much, and that ping google.com is good.
+
+
 
