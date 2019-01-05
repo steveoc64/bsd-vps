@@ -1,6 +1,14 @@
 # bsd-vps
 Settings for BSD based VPS
 
+## Setup iocell
+
+`pkg install iocell`
+
+then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
+
+then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
+
 ## /etc/group
 
 > Add self to wheel and operator groups
