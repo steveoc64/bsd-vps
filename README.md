@@ -1,6 +1,14 @@
 # bsd-vps
 Settings for BSD based VPS
 
+## Setup base system with all the things
+
+```
+pkg update
+pkg install go git
+go get github.com/steveoc64/bsd-vps
+```
+
 ## Setup iocell
 
 `pkg install iocell`
@@ -49,6 +57,16 @@ Create a dummy jail first
 `iocell console myjail` 
 
 check that the prompt looks good, the aliases all work, ifconfig shows only what it should, netstat -nr doesnt show much, and that ping google.com is good.
+
+## Jail settings
+
+```
+allow_raw_sockets=1
+boot=on
+ip4_addr='vtnet1|10.240.X.X/16'
+mount_devfs=1   // if you need /dev/urandom support, ala grafana and some other tools
+
+```
 
 
 
