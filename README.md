@@ -62,6 +62,8 @@ permit persist $USER as root
 
 ## Setup iocell
 
+https://iocell.readthedocs.io
+
 `pkg install iocell`
 
 then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
@@ -72,9 +74,11 @@ then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
 Create a dummy jail first
 
-`iocell create -n=myjail ip4_addr='vtnet1|10.240.X.X/16'`
-`iocell start myjail`
-`iocell console myjail` 
+```
+iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+iocell start myjail
+iocell console myjail 
+```
 
 check that the prompt looks good, the aliases all work, ifconfig shows only what it should, netstat -nr doesnt show much, and that ping google.com is good.
 
@@ -82,6 +86,7 @@ check that the prompt looks good, the aliases all work, ifconfig shows only what
 
 ```
 allow_raw_sockets=1
+vnet=off
 boot=on
 ip4_addr='vtnet1|10.240.X.X/16'
 mount_devfs=1   // if you need /dev/urandom support, ala grafana and some other tools

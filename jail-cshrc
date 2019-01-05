@@ -28,7 +28,7 @@ if ($?prompt) then
         # An interactive shell -- set some stuff up
         set prompt = "%N@%m:%~ %# "
         set promptchars = "%#"
-        set prompt="%{\e[31;1m%}%n%{\e[0;37m%}@%{\e[0;35m%}%m%{\e[37m%}:%{\e[33m%}%~%{\e[37m%}"\$"%{\e[0m%} "
+        set prompt="%{\e[31;1m%}%n%{\e[0;37m%}@%{\e[0;35m%}%m%{\e[37m%}:%{\e[33m%}%~%{\e[37m%}"\>"%{\e[0m%} "
 
         set filec
         set history = 1000
