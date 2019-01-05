@@ -1,6 +1,10 @@
 # bsd-vps
 Settings for BSD based VPS
 
+## /etc/group
+
+> Add self to wheel and operator groups
+
 ## /etc/rc.conf
 
 Using file `rc.conf` 
