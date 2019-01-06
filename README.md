@@ -271,7 +271,16 @@ Next step - lets get the kontrol jail to run etcd and kontrol on bootup, this in
 just add the file `kontroller.sh` to /usr/local/etc/rc.d, and chmod a+x it to make sure it runs.
 
 Test this by restarting the kontrol jail, and check that both etcd and kontrol are running in the background
-and that log files are accumulating in /root (`etcd.log` and `kontrol.log`)
+and that log files are accumulating in /root
+
+from the host:
+```
+iocell restart kontrol   # note the slight pause in startup - thats the sleep 1 in the startup script
+iocell console kontrol
+ps aux  # note that 2 daemons are running, one for etcd and one for kontrol
+tail -f *.log
+```
+
 
 ## Split the tasks into new jails
 
@@ -280,12 +289,16 @@ Back on the host, stop the kontrol jail, and lets clone it to create 2 new jails
 
 ```
 iocell stop kontrol
-iocell clone kontrol kite-math
-iocell clone kontrol kite-client
-iocell set allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.20/16' kite-math
-iocell set allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.21/16' kite-client
+iocell clone kontrol tag=kite-math allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.20/16'
+iocell clone kontrol tag=kite-client allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.21/16'
 iocell start kite-math kite-client
 ```
+
+Now you can `iocell console` into those 2, and remove the boot file in `/usr/local/etc/rc.d/kontroller.sh`
+
+then restart them back from the host  `iocell restart kite-math kite-client`
+
+
 
 Now, setup 3 tmux's
 
