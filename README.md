@@ -281,7 +281,6 @@ ps aux  # note that 2 daemons are running, one for etcd and one for kontrol
 tail -f *.log
 ```
 
-
 ## Split the tasks into new jails
 
 Back on the host, stop the kontrol jail, and lets clone it to create 2 new jails - one for the microservice, and one for the client
