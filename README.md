@@ -5,7 +5,7 @@ Settings for BSD based VPS
 
 ```
 pkg update
-pkg install go git htop doas vim-console
+pkg install go git htop doas vim-console tmux
 ```
 
 Make a special zfs volume for all the go code, and link it to the user's home dir. We are going to
@@ -179,8 +179,6 @@ go get -u .
 go install .
 ```
 
-## Cleanup the test jail
-
 That should work, so now its ok to get rid of the test jail, and start building a real basejail.
 
 `iocell stop myjail && iocell destroy myjail`
@@ -198,11 +196,11 @@ iocell console kontrol
 
 Kontrol jail:
 
-add .kontrol_vars to env
-then ...
+add `kontrol.csh` to csh env
+then ... log back in to the jail to take affect
 
 ```
-pkg install go git 
+pkg install go git tmux
 go get -u github.com/koding/kite
 cd ~/go/src/github.com/koding/kite
 git remote rename origin upstream
@@ -210,8 +208,15 @@ git remote add origin https://github.com/steveoc64/kite # being a fork of the ab
 git fetch origin
 git checkout freebsd-support
 git pull
-cd kontrol
+
+cd kontrol/kontrol
+go get -u .
 go install .
+
+cd ../../kitectl
+go get -u .
+go install .
+
 cd
 mkdir certs
 cd certs
@@ -219,4 +224,48 @@ openssl genrsa -out key.pem 2048
 openssl rsa -in key.pem -pubout > key_pub.pem
 cd
 kontrol -initial
+
+pkg install coreos-etcd(3.3.10)
+pkg install htop
 ```
+
+Now, use tmux to split into 5 panes on this jail .. then do
+
+Mux 0
+```
+htop
+```
+
+Mux1
+```
+etcd
+```
+
+Mux2
+```
+kontrol
+```
+
+Mux 3
+```
+cd ~/go/src/github.com/koding/kite/examples/math-register
+go run .
+```
+
+So now you have 3 things all running and chatting inside the jail, a kontrol system using etcd,
+and a microservice running, and 1 pane watching the CPU and memory usage and process isolation.
+
+Mux 4
+```
+cd ~/go/src/github.com/koding/kite/examples/exp2-query
+// hack the code to reduce the delay from time.Second down to time.Millisecond, for great speed !
+go run .
+```
+
+The jail should now be spinning out of control, thats good, stop Mux4 and on to the next bit
+
+## Make the kontrol run on boot
+
+Next step - lets get the kontrol jail to run etcd and kontrol on bootup, this involves writing some rc files.
+
+
