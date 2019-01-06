@@ -18,7 +18,7 @@ alias eu df -h .
 # A righteous umask
 umask 22
 
-set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin $HOME/bin)
+set path = (/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin $HOME/bin $HOME/go/bin)
 
 setenv  EDITOR  vi
 setenv  PAGER   more
