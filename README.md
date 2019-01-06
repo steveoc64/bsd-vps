@@ -307,3 +307,5 @@ Mux3 - `iocell console kite-client`
 
 Because the kontrol env vars still point to the original IP address, it should run, across jails
 
+NOTE - you will need to hack the math-register example to get rid of the "localhost" and replace it with "10.240.13.11" bits.
+
