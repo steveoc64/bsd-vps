@@ -268,6 +268,11 @@ The jail should now be spinning out of control, thats good, stop Mux3 and Mux4 a
 
 Next step - lets get the kontrol jail to run etcd and kontrol on bootup, this involves writing some rc files.
 
+just add the file `kontroller.sh` to /usr/local/etc/rc.d, and chmod a+x it to make sure it runs.
+
+Test this by restarting the kontrol jail, and check that both etcd and kontrol are running in the background
+and that log files are accumulating in /root (`etcd.log` and `kontrol.log`)
+
 ## Split the tasks into new jails
 
 Back on the host, stop the kontrol jail, and lets clone it to create 2 new jails - one for the microservice, and one for the client
