@@ -99,14 +99,16 @@ allow_mount_zfs=1
 
 ```
 ic myjail
+pkg install go git
 go version << check that go is accessible
 ```
 
 Now lets mount the go source tree
 
 ```
-
+???????????????
 ```
+
 Lets try something complicated
 ```
 go get github.com/koding/kite
@@ -117,12 +119,18 @@ That should fail, because the base package lacks some freebsd-isms. We fix !
 ```
 cd ~/go/src/github.com/koding/kite
 git rename origin upstream
-git remote add origin https://github.com/steveoc64/kite  // being a fork of the above with bsd fixes in place
+git remote add origin https://github.com/steveoc64/kite # being a fork of the above with bsd fixes in place
 git fetch origin
 git checkout freebsd-support
 git pull
 go install .
 ```
 
+## Cleanup the test jail
 
+That should work, so now its ok to get rid of the test jail, and start building a real basejail.
+
+`iocell stop myjail && iocell destroy myjail`
+
+done !
 
