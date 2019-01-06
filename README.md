@@ -118,7 +118,7 @@ That should fail, because the base package lacks some freebsd-isms. We fix !
 
 ```
 cd ~/go/src/github.com/koding/kite
-git rename origin upstream
+git remote rename origin upstream
 git remote add origin https://github.com/steveoc64/kite # being a fork of the above with bsd fixes in place
 git fetch origin
 git checkout freebsd-support
