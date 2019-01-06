@@ -72,7 +72,58 @@ then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
 ## Test jail networking
 
-Create a dummy jail first
+Creatiocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+iocell start myjail
+iocell console myjail 
+```
+
+check that the prompt looks good, the aliases all work, ifconfig shows only what it should, netstat -nr doesnt show much, and that ping google.com is good.
+
+## Jail settings
+
+```
+allow_raw_sockets=1
+vnet=off
+boot=on
+ip4_addr='vtnet1|10.240.X.X/16'
+mount_devfs=1   // if you need /dev/urandom support, ala grafana and some other tools
+allow_mount=1
+allow_mount_devfs=1
+allow_mount_zfs=1
+```
+
+## Do some go dev inside the jail
+
+```
+ic myjail
+pkg install go git
+go version << check that go is accessible
+```
+
+Now lets mount the go source tree
+
+```
+???????????????
+```
+
+Lets try something complicated
+```
+go get github.com/koding/kite
+```
+
+That should fail, because the base package lacks some freebsd-isms. We fix !
+
+```
+cd ~/go/src/github.com/koding/kite
+git remote rename origin upstream
+git remote add origin https://github.com/steveoc64/kite # being a fork of the above with bsd fixes in place
+git fetch origin
+git checkout freebsd-support
+git pull
+cd kontrol
+go get -u .
+go install .
+e a dummy jail first
 
 ```
 iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
@@ -123,6 +174,8 @@ git remote add origin https://github.com/steveoc64/kite # being a fork of the ab
 git fetch origin
 git checkout freebsd-support
 git pull
+cd kontrol
+go get -u .
 go install .
 ```
 
@@ -134,3 +187,36 @@ That should work, so now its ok to get rid of the test jail, and start building 
 
 done !
 
+## Setup a Kontrol jail
+
+Host:
+```
+iocell create tag=kontrol boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+iocell start kontrol
+iocell console kontrol
+```
+
+Kontrol jail:
+
+add .kontrol_vars to env
+then ...
+
+```
+pkg install go git 
+go get -u github.com/koding/kite
+cd ~/go/src/github.com/koding/kite
+git remote rename origin upstream
+git remote add origin https://github.com/steveoc64/kite # being a fork of the above with bsd fixes in place
+git fetch origin
+git checkout freebsd-support
+git pull
+cd kontrol
+go install .
+cd
+mkdir certs
+cd certs
+openssl genrsa -out key.pem 2048
+openssl rsa -in key.pem -pubout > key_pub.pem
+cd
+kontrol -initial
+```

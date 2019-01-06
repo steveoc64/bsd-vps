@@ -1,0 +1,7 @@
+export KONTROL_PORT=4099
+export KONTROL_USERNAME="kontrol"
+export KONTROL_STORAGE="etcd"
+export KONTROL_KONTROLURL="http://127.0.0.1:4099/kite"
+export KONTROL_PUBLICKEYFILE=~/certs/key_pub.pem
+export KONTROL_PRIVATEKEYFILE=~/certs/key.pem
+
