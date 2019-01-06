@@ -262,10 +262,31 @@ cd ~/go/src/github.com/koding/kite/examples/exp2-query
 go run .
 ```
 
-The jail should now be spinning out of control, thats good, stop Mux4 and on to the next bit
+The jail should now be spinning out of control, thats good, stop Mux3 and Mux4 and on to the next bit
 
 ## Make the kontrol run on boot
 
 Next step - lets get the kontrol jail to run etcd and kontrol on bootup, this involves writing some rc files.
 
+## Split the tasks into new jails
+
+Back on the host, stop the kontrol jail, and lets clone it to create 2 new jails - one for the microservice, and one for the client
+
+
+```
+iocell stop kontrol
+iocell clone kontrol kite-math
+iocell clone kontrol kite-client
+iocell set allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.20/16' kite-math
+iocell set allow_raw_sockets=1 vnet=off boot=on ip4_addr='vtnet1|10.240.13.21/16' kite-client
+iocell start kite-math kite-client
+```
+
+Now, setup 3 tmux's
+
+Mux1 - `iocell console kontrol` - watch etcd and kontrol running
+Mux2 - `iocell console kite-math`
+Mux3 - `iocell console kite-client`
+
+Because the kontrol env vars still point to the original IP address, it should run, across jails
 
