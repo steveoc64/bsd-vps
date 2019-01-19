@@ -6,6 +6,7 @@ Settings for BSD based VPS
 ```
 pkg update
 pkg install go git htop doas vim-console tmux
+pkg install consul vault terraform nomad
 ```
 
 Make a special zfs volume for all the go code, and link it to the user's home dir. We are going to
@@ -72,7 +73,7 @@ then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
 ## Test jail networking
 
-Creatiocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+Create iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
 iocell start myjail
 iocell console myjail 
 ```
