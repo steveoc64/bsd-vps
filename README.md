@@ -66,6 +66,8 @@ permit persist $USER as root
 https://iocell.readthedocs.io
 
 `pkg install iocell`
+ 
+`iocell activate zroot`
 
 then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
 
@@ -309,4 +311,45 @@ Mux3 - `iocell console kite-client`
 Because the kontrol env vars still point to the original IP address, it should run, across jails
 
 NOTE - you will need to hack the math-register example to get rid of the "localhost" and replace it with "10.240.13.11" bits.
+
+
+## Building a Mail Server
+
+Create a new base jail for mail
+
+http://www.purplehat.org/?page_id=16
+
+```
+pkg install portmaster
+pkg install maia
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
