@@ -73,6 +73,8 @@ then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
 
 then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
+then copy `.default` to /iocell/.default
+
 ## Test jail networking
 
 Create iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
