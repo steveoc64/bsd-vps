@@ -55,6 +55,8 @@ Set all the specific jails
 
 `service pf start` from the console to enable proper NAT'ing from inside the jails, and ssh back in to the box.
 
+`pfctl -f /etc/pf.conf` to reload pf without killing all the things.
+
 ## Doas
 
 /usr/local/etc/doas.conf
@@ -77,7 +79,10 @@ then copy `.default` to /iocell/.default
 
 ## Test jail networking
 
-Create iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+Create :
+
+```
+iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
 iocell start myjail
 iocell console myjail 
 ```
