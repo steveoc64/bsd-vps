@@ -299,8 +299,6 @@ Now you can `iocell console` into those 2, and remove the boot file in `/usr/loc
 
 then restart them back from the host  `iocell restart kite-math kite-client`
 
-
-
 Now, setup 3 tmux's
 
 Mux1 - `iocell console kontrol` - watch etcd and kontrol running
