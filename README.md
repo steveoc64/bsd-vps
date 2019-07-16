@@ -6,6 +6,7 @@ Settings for BSD based VPS
 ```
 pkg update
 pkg install go git htop doas vim-console tmux
+pkg install consul vault terraform nomad
 ```
 
 Make a special zfs volume for all the go code, and link it to the user's home dir. We are going to
@@ -54,6 +55,8 @@ Set all the specific jails
 
 `service pf start` from the console to enable proper NAT'ing from inside the jails, and ssh back in to the box.
 
+`pfctl -f /etc/pf.conf` to reload pf without killing all the things.
+
 ## Doas
 
 /usr/local/etc/doas.conf
@@ -65,6 +68,8 @@ permit persist $USER as root
 https://iocell.readthedocs.io
 
 `pkg install iocell`
+ 
+`iocell activate zroot`
 
 then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
 
@@ -74,7 +79,10 @@ then copy `.default` to /iocell/.default
 
 ## Test jail networking
 
-Creatiocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
+Create :
+
+```
+iocell create tag=myjail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.X.X/16'
 iocell start myjail
 iocell console myjail 
 ```
@@ -308,4 +316,45 @@ Mux3 - `iocell console kite-client`
 Because the kontrol env vars still point to the original IP address, it should run, across jails
 
 NOTE - you will need to hack the math-register example to get rid of the "localhost" and replace it with "10.240.13.11" bits.
+
+
+## Building a Mail Server
+
+Create a new base jail for mail
+
+http://www.purplehat.org/?page_id=16
+
+```
+pkg install portmaster
+pkg install maia
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
