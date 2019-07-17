@@ -11,6 +11,13 @@
 - pkg install bash-static
 - logout / login .. check `hostname -f`
 
+Add some aliases to .cshrc to tail useful things
+```bash
+alias tm tail -f /var/log/maillog /var/log/dovecot/*.log /var/log/postfix/*.log
+alias tw tail -f /var/log/php-fpm/php-fpm.log /var/log/nginx/*.log
+alias ta tail -f /var/log/php-fpm/php-fpm.log /var/log/nginx/*.log -f /var/log/maillog /var/log/dovecot/*.log /var/log/postfix/*.log
+```
+
 ## Add stuff to /etc/rc.conf
 
 ```bash
@@ -20,8 +27,9 @@ postgresql_enable="YES"
 postfix_enable="YES"
 iredamin_enable="YES"
 iredapd_enable="YES"
-#roundcube_enable="YES"
 php_fpm_enable="YES"
+amavisd_enable="YES"
+clamd_enable="YES"
 ```
 
 ## download and build iRedMail
@@ -126,4 +134,5 @@ Seem to be some issues with clamav / amavisd with IP addresses here and there
 
 Appending the jail's IP address to places where its expecting 127.0.0.1 seems to be needed to fix it.
 
+Run `freshclam` to update the clamdb ?
 
