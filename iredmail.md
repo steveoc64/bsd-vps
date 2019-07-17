@@ -11,6 +11,19 @@
 - pkg install bash-static
 - logout / login .. check `hostname -f`
 
+## Add stuff to /etc/rc.conf
+
+```bash
+# iRedMail
+
+postgresql_enable="YES"
+postfix_enable="YES"
+iredamin_enable="YES"
+iredapd_enable="YES"
+#roundcube_enable="YES"
+php_fpm_enable="YES"
+```
+
 ## download and build iRedMail
 
 ```bash
@@ -62,10 +75,55 @@ Once that is all working, might be a good idea to snapshot the cell.
 Get the certbot first
 
 ```bash
-pkg install certbot
+pkg install py36-certbot
 service nginx stop
 certbot certonly
+```
+
+
+And do the symlinks
+
+```bash
+mv /etc/ssl/certs/iRedMail.crt{,.bak}       # Backup. Rename iRedMail.crt to iRedMail.crt.bak
+mv /etc/ssl/private/iRedMail.key{,.bak}     # Backup. Rename iRedMail.key to iRedMail.key.bak
+ln -s /usr/local/etc/letsencrypt/live/XXX/fullchain.pem /etc/ssl/certs/iRedMail.crt
+ln -s /usr/local/etc/letsencrypt/live/XXX/privkey.pem /etc/ssl/private/iRedMail.key
+```
+
+Get the services up and running again
+```
+service postgresql restart
+service postfix restart
+service dovecot restart
 service nginx start
 ```
 
-And do the symlinks
+Then login to `XXX.com/iredadmin` and create the domains, add the users.
+
+Might be a good time to snapshot the cell now.
+
+## Roundcube
+
+PHP-FPM is cactus out of the box
+
+Fix /usr/local/etc/php-fpm.d/www.conf - comment out the listen restriction
+
+```bash
+[inet]
+user = www
+group = www
+
+listen = 127.0.0.1:9999
+listen.owner = www
+listen.group = www
+listen.mode = 0660
+;listen.allowed_clients = 127.0.0.1
+```
+
+## Last Bits
+
+Seem to be some issues with clamav / amavisd with IP addresses here and there
+
+Appending the jail's IP address to places where its expecting 127.0.0.1 seems to be needed to fix it.
+
+
