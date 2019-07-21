@@ -1,11 +1,14 @@
 # bsd-vps
 Settings for BSD based VPS
 
+Boot off bootonly, then select base and kernel, dont need kernel-dbg or lib32 for lean
+killer machine.
+
 ## Setup base system with all the things golang
 
 ```
 pkg update
-pkg install go git htop doas vim-console tmux
+pkg install go git htop doas vim-console tmux iocell
 pkg install consul vault terraform nomad
 ```
 
