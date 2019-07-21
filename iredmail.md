@@ -86,10 +86,21 @@ bork the whole installation !!!!
 
 ```bash
 pkg install py27-certbot
-service nginx stop
-certbot certonly
 ```
 
+or  - build certbot from ports
+
+```bash
+cd /usr/ports/security/py-certbot && make install clean
+```
+
+
+Then install it !
+```bash
+service nginx stop
+certbot certonly
+service nginx start
+```
 
 And do the symlinks
 
