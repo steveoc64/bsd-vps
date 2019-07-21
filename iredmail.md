@@ -81,10 +81,11 @@ Once that is all working, might be a good idea to snapshot the cell.
 
 ## Setup
 
-Get the certbot first
+Get the certbot first - use the py27 certbot .. if you pull in any py36 stuff it will completely
+bork the whole installation !!!!
 
 ```bash
-pkg install py36-certbot
+pkg install py27-certbot
 service nginx stop
 certbot certonly
 ```
@@ -464,4 +465,6 @@ Seem to be some issues with clamav / amavisd with IP addresses here and there
 Appending the jail's IP address to places where its expecting 127.0.0.1 seems to be needed to fix it.
 
 Run `freshclam` to update the clamdb ?
+
+Make sure that postgresql client is up to date with version 10
 
