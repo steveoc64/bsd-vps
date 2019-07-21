@@ -45,6 +45,9 @@ echo Aside from defaults, be sure the "APACHE", "DOVECOT2", "MYSQLSERVER", "PFA"
 echo Feel free to select any additional options you may want.
 make config -C $pr/usr/ports/security/maia
 
+iocell create tag=mail boot=on allow_mount_zfs=1 allow_raw_sockets=1 mount_devfs=1 vnet=off ip4_addr='vtnet1|10.240.50.2/16'
+il
+ic mail
 
 
 
