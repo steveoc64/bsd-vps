@@ -80,29 +80,9 @@ From inside there - check `ifconfig` and `netstat -nr4` for sanity
 You will see that you can ping all the jails on this network, and other jails on other machines 
 that are on the private LAN
 
-## Jails connected to the public internet
+## Jails connected to the public internet - needs NAT
 
-Lets create another virtual switch - bridge2/3
-.. and we are going to plug this into both vtnet0 and vtnet1
-
-```bash
-ifconfig bridge create
-ifconfig bridge2 addm vtnet1 addm vtnet0
-```
-
-With jails on this network, you can either route them though the internal LAN
-```bash
-iocell set defaultrouter=10.240.0.X  jailname 
-```
-
-.. or give them access to route to the internet
-```bash
-iocell set defaultrouter=(vtnet0's address) jailname
-```
-
-.. but will need gateway setup for this to function
-
-## Basic NAT 
+For our jails to communicate outside of the private lan, use pf to nat them across
 
 ```
 scrub in all
