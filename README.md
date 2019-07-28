@@ -78,6 +78,10 @@ then hack iocell to remove doc.txz from /usr/local/lib/iocell/ioc-globals
 
 then `iocell fetch` to grab 12.0-RELEASE, and you are ready to go
 
+Altenative
+```bash
+iocell fetch ftpfiles=base.txz
+```
 then copy `.default` to /iocell/.default
 
 ## Test jail networking
