@@ -55,6 +55,11 @@ Dont bother with SoGO
 
 .. this will take a while as it downloads all the things, and builds all the apps.
 
+## More fixes
+
+Create user clamav
+
+`adduser clamav`
 
 ## Manual fixes
 
@@ -72,6 +77,8 @@ and then jumping back to complete the install
 cd /root/iRedMail-0.9.9
 bash iRedMail.sh
 ```
+
+Might have to edit the "packages_freebsd.sh" file though to not try re-installing spamassassin !
 
 Total runtime on 1 CPU - 35mins compile time
 
